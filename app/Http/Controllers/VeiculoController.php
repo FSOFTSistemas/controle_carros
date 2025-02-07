@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Veiculo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class VeiculoController extends Controller
 {
@@ -21,16 +23,78 @@ class VeiculoController extends Controller
      */
     public function create()
     {
-        //
+        return view('veiculos.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+{
+    try {
+        $data = $request->validate([
+            'placa'          => 'required|string|max:15|unique:veiculos',
+            'modelo'         => 'required|string|max:50',
+            'ano'            => 'required|string|max:4',
+            'cor'            => 'required|string|max:30',
+            'crlv'           => 'required|file|mimes:pdf',
+            'tacografo'      => 'required|file|mimes:pdf',
+            'vistoria'       => 'required|file|mimes:pdf',
+            'autorizacao_te' => 'required|file|mimes:pdf',
+            'certificado_te' => 'required|file|mimes:pdf',
+            'foto1'          => 'nullable|image|mimes:jpeg,png',
+            'foto2'          => 'nullable|image|mimes:jpeg,png',
+            'foto3'          => 'nullable|image|mimes:jpeg,png',
+            'foto4'          => 'nullable|image|mimes:jpeg,png',
+            'foto5'          => 'nullable|image|mimes:jpeg,png',
+            'foto6'          => 'nullable|image|mimes:jpeg,png',
+        ]);
+
+        DB::transaction(function () use (&$data, $request) {
+            $uniqid = uniqid();
+
+            // Salvando documentos PDF
+            $data['crlv'] = $request['crlv']->storeAs("veiculos/$uniqid", 'crlv.pdf', 'public');
+            $data['tacografo'] = $request['tacografo']->storeAs("veiculos/$uniqid", 'tacografo.pdf', 'public');
+            $data['vistoria'] = $request['vistoria']->storeAs("veiculos/$uniqid", 'vistoria.pdf', 'public');
+            $data['autorizacao_te'] = $request['autorizacao_te']->storeAs("veiculos/$uniqid", 'autorizacao_te.pdf', 'public');
+            $data['certificado_te'] = $request['certificado_te']->storeAs("veiculos/$uniqid", 'certificado_te.pdf', 'public');
+
+            // Salvando fotos
+            for ($i = 1; $i <= 6; $i++) {
+                if ($request->hasFile("foto$i")) {
+                    $data["foto$i"] = $request["foto$i"]->storeAs("veiculos/$uniqid", "foto$i.jpg", 'public');
+                }
+            }
+
+            // Criando o veículo no banco
+            Veiculo::create([
+                'placa' => $data['placa'],
+                'modelo' => $data['modelo'],
+                'ano' => $data['ano'],
+                'cor' => $data['cor'],
+                'crlv' => $data['crlv'],
+                'tacografo' => $data['tacografo'],
+                'vistoria' => $data['vistoria'],
+                'autorizacao_te' => $data['autorizacao_te'],
+                'certificado_te' => $data['certificado_te'],
+                'foto1' => $data['foto1'] ?? null,
+                'foto2' => $data['foto2'] ?? null,
+                'foto3' => $data['foto3'] ?? null,
+                'foto4' => $data['foto4'] ?? null,
+                'foto5' => $data['foto5'] ?? null,
+                'foto6' => $data['foto6'] ?? null,
+            ]);
+        });
+
+        return Redirect()->route('veiculos.index')->with('success', 'O veículo foi cadastrado com sucesso!');
+    } catch (\Exception $e) {
+        dd($e);
+        return back()->withErrors(['error' => 'Erro ao cadastrar veículo: ' . $e->getMessage()]);
     }
+}
+
+
 
     /**
      * Display the specified resource.
