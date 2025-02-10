@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('bairro');
             $table->string('cep', 9); // Formato 99999-999
             $table->string('uf', 2); // Sigla do estado (ex: SP, RJ)
+            $table->unsignedBigInteger('monitor_id'); // Adicionando o campo para relacionar com o monitor
             $table->timestamps();
         });
     }

@@ -320,6 +320,11 @@ return [
             "type" => 'text',
             "text" => "veiculo",
             "url" => "/veiculos",
+        ],
+        [
+            "type" => 'text',
+            "text" => "monitor",
+            "url" => "/monitores",
         ]
     ],
 
