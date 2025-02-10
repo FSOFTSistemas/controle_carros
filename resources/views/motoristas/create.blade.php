@@ -32,6 +32,14 @@
                     <input type="file" name="curso_2" class="form-control" accept="application/pdf" required>
                 </div>
                 <div class="form-group">
+                    <label for="cnh">CNH (PDF)</label>
+                    <input type="file" name="cnh" class="form-control" accept="application/pdf" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_vencimento_cnh">Data de Vencimento da CNH</label>
+                    <input type="date" name="data_vencimento_cnh" class="form-control" required>
+                </div>
+                <div class="form-group">
                     <label for="comprovante_residencia">Comprovante de Residência (PDF)</label>
                     <input type="file" name="comprovante_residencia" class="form-control" accept="application/pdf" required>
                 </div>
