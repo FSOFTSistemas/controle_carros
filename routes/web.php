@@ -1,14 +1,29 @@
 <?php
 
 use App\Http\Controllers\MotoristaController;
+use App\Http\Controllers\VeiculoController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-"Auth"::routes();
+Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('veiculos', App\Http\Controllers\VeiculoController::class);
-route::resource("motoristas",MotoristaController::class);
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::resource('veiculos', VeiculoController::class);
+Route::resource('motoristas', MotoristaController::class);
+
+// 🔹 Rota para exibir PDFs diretamente pelo storage
+Route::get('/motoristas/curso/{file}', function ($file) {
+    $path = storage_path("app/public/motoristas_cursos/$file");
+
+    if (!file_exists($path)) {
+        abort(404, "Arquivo não encontrado.");
+    }
+
+    return response()->file($path);
+})->name('motoristas.curso');
