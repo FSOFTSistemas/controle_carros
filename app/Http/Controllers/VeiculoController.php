@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Veiculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use PhpParser\Node\Stmt\TryCatch;
 
 class VeiculoController extends Controller
 {
@@ -101,30 +101,81 @@ class VeiculoController extends Controller
      */
     public function show(Veiculo $veiculo)
     {
-        //
+        return view('veiculos.show', compact('veiculo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Veiculo $veiculo)
-    {
-        //
+    public function edit($id) {
+        $veiculo = Veiculo::findOrFail($id);
+        return view('veiculos.create', compact('veiculo')); // Passa o $veiculo para edição
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Veiculo $veiculo)
+    public function update(Request $request, $id)
     {
-        //
+        // Busca o veículo pelo ID
+        $veiculo = Veiculo::findOrFail($id);
+
+        // Validação dos campos
+        $request->validate([
+            'placa' => 'required|string|max:15',
+            'modelo' => 'required|string|max:50',
+            'ano' => 'required|numeric|min:1900|max:' . date('Y'),
+            'cor' => 'required|string|max:30',
+            'crlv' => 'nullable|file|mimes:pdf',
+            'tacografo' => 'nullable|file|mimes:pdf',
+            'vistoria' => 'nullable|file|mimes:pdf',
+            'autorizacao_te' => 'nullable|file|mimes:pdf',
+            'certificado_te' => 'nullable|file|mimes:pdf',
+            'foto1' => 'nullable|image|mimes:jpeg,png',
+            'foto2' => 'nullable|image|mimes:jpeg,png',
+            'foto3' => 'nullable|image|mimes:jpeg,png',
+            'foto4' => 'nullable|image|mimes:jpeg,png',
+            'foto5' => 'nullable|image|mimes:jpeg,png',
+            'foto6' => 'nullable|image|mimes:jpeg,png',
+        ]);
+
+        // Atualiza os campos básicos
+        $veiculo->update($request->except(['crlv', 'tacografo', 'vistoria', 'autorizacao_te', 'certificado_te', 'foto1', 'foto2', 'foto3', 'foto4', 'foto5', 'foto6']));
+
+        // Processamento de arquivos (se novos arquivos foram enviados, substitui os antigos)
+        $documentos = ['crlv', 'tacografo', 'vistoria', 'autorizacao_te', 'certificado_te'];
+        foreach ($documentos as $doc) {
+            if ($request->hasFile($doc)) {
+                $path = $request->file($doc)->store("veiculos/$id", 'public');
+                $veiculo->$doc = $path;
+            }
+        }
+
+        // Processamento das fotos
+        for ($i = 1; $i <= 6; $i++) {
+            $campoFoto = "foto{$i}";
+            if ($request->hasFile($campoFoto)) {
+                $path = $request->file($campoFoto)->store("veiculos/$id", 'public');
+                $veiculo->$campoFoto = $path;
+            }
+        }
+
+        $veiculo->save(); // Salva as alterações no banco
+
+        return redirect()->route('veiculos.index')->with('success', 'Veículo atualizado com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Veiculo $veiculo)
     {
-        //
+        try {
+            $veiculo->delete();
+            return Redirect()->route('veiculos.index')->with('success', 'O veículo foi excluido');
+        } catch (\Exception $e) {
+            return Redirect()->back();
+        }
     }
 }
