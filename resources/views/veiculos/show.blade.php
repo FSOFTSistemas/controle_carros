@@ -37,7 +37,7 @@
                 @foreach (['crlv', 'tacografo', 'vistoria', 'autorizacao_te', 'certificado_te'] as $doc)
                     @if($veiculo->$doc)
                         <li class="list-group-item">
-                            <a href="{{ asset($veiculo->$doc) }}" target="_blank">{{ ucfirst(str_replace('_', ' ', $doc)) }}</a>
+                            <a href="{{ asset('storage/' . $veiculo->$doc) }}" target="_blank">{{ ucfirst(str_replace('_', ' ', $doc)) }}</a>
                         </li>
                     @endif
                 @endforeach
@@ -53,7 +53,7 @@
                     @php $foto = 'foto' . $i; @endphp
                     @if($veiculo->$foto)
                         <div class="col-md-4 col-6 mb-2">
-                            <img src="{{ asset($veiculo->$foto) }}" alt="Foto {{ $i }}" class="img-fluid rounded">
+                            <img src="{{ asset('storage/'. $veiculo->$foto) }}" alt="Foto {{ $i }}" class="img-fluid rounded">
                         </div>
                     @endif
                 @endfor

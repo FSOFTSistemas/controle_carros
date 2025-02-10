@@ -315,6 +315,11 @@ return [
             "type" => 'text',
             "text" => "motorista",
             "url" => "/motoristas",
+        ],
+        [
+            "type" => 'text',
+            "text" => "veiculo",
+            "url" => "/veiculos",
         ]
     ],
 
