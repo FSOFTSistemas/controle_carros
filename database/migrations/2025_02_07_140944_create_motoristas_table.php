@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('motoristas', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('apelido')->nullable();
+            $table->string('cpf')->unique();
+            $table->string('cnh')->nullable()->unique();
+            $table->date('validade_cnh')->nullable();
             $table->string('curso_1');
             $table->string('curso_2');
             $table->string('comprovante_residencia');
             $table->string('antecedente_estadual');
             $table->string('antecedente_federal');
-            $table->string('cpf', 14); // Formato 000.000.000-00
-            $table->string('nome');
-            $table->string('apelido')->nullable();
             $table->timestamps();
         });
     }

@@ -13,10 +13,11 @@ class Monitor extends Model
         "nome",
         "apelido",
         "telefone",
+        "endereco_id"
     ];
 
     public function endereco()
     {
-        return $this->hasOne(Endereco::class)->withDefault();
+        return $this->belongsTo(Endereco::class);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Monitor;
+use App\Models\Motorista;
+use App\Models\Veiculo;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $veiculo = Veiculo::count();
+        $motorista = Motorista::count();
+        $monitor = Monitor::count();
+        return view('home', compact('veiculo', 'motorista', 'monitor'));
     }
 }

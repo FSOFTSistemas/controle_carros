@@ -14,11 +14,5 @@ class Endereco extends Model
         "bairro",
         "cep",
         "uf",
-        "monitor_id"
     ];
-
-    public function monitor()
-    {
-        return $this->belongsTo(Monitor::class);
-    }
 }

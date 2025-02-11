@@ -38,6 +38,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="input-group has-validation mb-2">
+                    <span class="input-group-text"><i class="fa fa-cogs" aria-hidden="true"></i></span>
                     <div class="form-floating">
                         <input class="form-control" type="text" name="nome" id="nome" placeholder="Nome" required
                             value="{{ old('nome', $monitor->nome ?? '') }}">
@@ -88,8 +89,8 @@
             <div class="col-6">
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
-                        <input class="form-control" type="text" name="endereco[logradouro]" id="logradouro"
-                            placeholder="Logradouro" required value="{{ old('endereco.logradouro', $monitor->endereco->logradouro ?? '') }}">
+                        <input class="form-control" type="text" name="logradouro" id="logradouro"
+                            placeholder="Logradouro" required value="{{ old('logradouro', $monitor->endereco->logradouro ?? '') }}">
                         <label for="logradouro">Logradouro</label>
                     </div>
                     <div class="invalid-feedback">Informe o logradouro do endereço.</div>
@@ -99,8 +100,8 @@
             <div class="col-6">
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
-                        <input class="form-control" type="text" name="endereco[numero]" id="numero" placeholder="Número"
-                            required value="{{ old('endereco.numero', $monitor->endereco->numero ?? '') }}">
+                        <input class="form-control" type="text" name="numero" id="numero" placeholder="Número"
+                            required value="{{ old('numero', $monitor->endereco->numero ?? '') }}">
                         <label for="numero">Número</label>
                     </div>
                     <div class="invalid-feedback">Informe o número do endereço.</div>
@@ -112,8 +113,8 @@
             <div class="col-6">
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
-                        <input class="form-control" type="text" name="endereco[bairro]" id="bairro" placeholder="Bairro"
-                            required value="{{ old('endereco.bairro', $monitor->endereco->bairro ?? '') }}">
+                        <input class="form-control" type="text" name="bairro" id="bairro" placeholder="Bairro"
+                            required value="{{ old('bairro', $monitor->endereco->bairro ?? '') }}">
                         <label for="bairro">Bairro</label>
                     </div>
                     <div class="invalid-feedback">Informe o bairro do endereço.</div>
@@ -123,8 +124,8 @@
             <div class="col-6">
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
-                        <input class="form-control" type="text" name="endereco[cep]" id="cep" placeholder="CEP"
-                            required value="{{ old('endereco.cep', $monitor->endereco->cep ?? '') }}" maxlength="9">
+                        <input class="form-control" type="text" name="cep" id="cep" placeholder="CEP"
+                            required value="{{ old('cep', $monitor->endereco->cep ?? '') }}" maxlength="9">
                         <label for="cep">CEP</label>
                     </div>
                     <div class="invalid-feedback">Informe o CEP do endereço.</div>
@@ -136,8 +137,8 @@
             <div class="col-6">
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
-                        <input class="form-control" type="text" name="endereco[uf]" id="uf" placeholder="UF" required
-                            value="{{ old('endereco.uf', $monitor->endereco->uf ?? '') }}" maxlength="2">
+                        <input class="form-control" type="text" name="uf" id="uf" placeholder="UF" required
+                            value="{{ old('uf', $monitor->endereco->uf ?? '') }}" maxlength="2">
                         <label for="uf">UF</label>
                     </div>
                     <div class="invalid-feedback">Informe a UF do endereço.</div>

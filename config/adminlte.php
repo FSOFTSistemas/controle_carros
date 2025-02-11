@@ -216,7 +216,7 @@ return [
 
     'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => false,
+    'sidebar_collapse_auto_size' => true,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
@@ -263,7 +263,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => true,
     'disable_darkmode_routes' => false,
 
     /*
@@ -302,28 +302,37 @@ return [
         // Navbar items:
         [
             'type' => 'navbar-search',
-            'text' => 'search',
+            'text' => 'pesquisar',
             'topnav_right' => true,
         ],
         [
             'type' => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
         // Sidebar items:
         [
             "type" => 'text',
-            "text" => "motorista",
+            "icon" => 'fa fa-home',
+            "text" => "Home",
+            "url" => "/home",
+        ],
+        [
+            "type" => 'text',
+            "icon" => 'fa fa-users',
+            "text" => "Motorista",
             "url" => "/motoristas",
         ],
         [
             "type" => 'text',
-            "text" => "veiculo",
+            "icon" => 'fa fa-car',
+            "text" => "Veiculo",
             "url" => "/veiculos",
         ],
         [
             "type" => 'text',
-            "text" => "monitor",
+            "icon" => 'fa fa-user',
+            "text" => "Monitor",
             "url" => "/monitores",
         ]
     ],

@@ -39,8 +39,24 @@
                             <td>{{ $monitor->cpf }}</td>
                             <td>{{ $monitor->telefone }}</td>
                             <td>
-                                <a href="{{ route('monitores.show', $monitor->id) }}" class="btn btn-info btn-sm">Ver</a>
+                                <!-- Botão que abre o modal -->
+                                <button class="btn btn-info btn-sm btn-ver"
+                                    data-nome="{{ $monitor->nome }}"
+                                    data-apelido="{{ $monitor->apelido }}"
+                                    data-cpf="{{ $monitor->cpf }}"
+                                    data-telefone="{{ $monitor->telefone }}"
+                                    data-logradouro="{{ $monitor->endereco['logradouro'] ?? '' }}"
+                                    data-numero="{{ $monitor->endereco['numero'] ?? '' }}"
+                                    data-bairro="{{ $monitor->endereco['bairro'] ?? '' }}"
+                                    data-cep="{{ $monitor->endereco['cep'] ?? '' }}"
+                                    data-uf="{{ $monitor->endereco['uf'] ?? '' }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalMonitor">
+                                    Ver
+                                </button>
+
                                 <a href="{{ route('monitores.edit', $monitor->id) }}" class="btn btn-warning btn-sm">Editar</a>
+
                                 <form action="{{ route('monitores.destroy', $monitor->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -53,6 +69,31 @@
             </table>
         </div>
     </div>
+
+    <!-- Modal de Detalhes do Monitor -->
+    <div class="modal fade" id="modalMonitor" tabindex="-1" aria-labelledby="modalMonitorLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMonitorLabel">Detalhes do Monitor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Nome:</strong> <span id="modal-nome"></span></li>
+                        <li class="list-group-item"><strong>Apelido:</strong> <span id="modal-apelido"></span></li>
+                        <li class="list-group-item"><strong>CPF:</strong> <span id="modal-cpf"></span></li>
+                        <li class="list-group-item"><strong>Telefone:</strong> <span id="modal-telefone"></span></li>
+                        <li class="list-group-item"><strong>Logradouro:</strong> <span id="modal-logradouro"></span></li>
+                        <li class="list-group-item"><strong>Número:</strong> <span id="modal-numero"></span></li>
+                        <li class="list-group-item"><strong>Bairro:</strong> <span id="modal-bairro"></span></li>
+                        <li class="list-group-item"><strong>CEP:</strong> <span id="modal-cep"></span></li>
+                        <li class="list-group-item"><strong>UF:</strong> <span id="modal-uf"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -63,14 +104,29 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         $(document).ready(function() {
-            $('#veiculosTable').DataTable({
+            $('#monitorTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
                 },
                 "responsive": true,
                 "autoWidth": false
+            });
+
+            // Preencher os dados no modal ao clicar no botão "Ver"
+            $('.btn-ver').click(function() {
+                $('#modal-nome').text($(this).data('nome'));
+                $('#modal-apelido').text($(this).data('apelido'));
+                $('#modal-cpf').text($(this).data('cpf'));
+                $('#modal-telefone').text($(this).data('telefone'));
+                $('#modal-logradouro').text($(this).data('logradouro'));
+                $('#modal-numero').text($(this).data('numero'));
+                $('#modal-bairro').text($(this).data('bairro'));
+                $('#modal-cep').text($(this).data('cep'));
+                $('#modal-uf').text($(this).data('uf'));
             });
         });
     </script>
