@@ -8,24 +8,25 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+// Rota para login
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Auth::routes();
 
+// Rota para o dashboard
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('motoristas/{id}/documentos', [MotoristaController::class, 'documentos'])->name('motoristas.documentos');
 
+
+// Rotas de recursos
 Route::resource('veiculos', VeiculoController::class);
-
 Route::resource('monitores', MonitorController::class);
-
-Route::resource('motoristas', MotoristaController::class);
-
+Route::resource('motoristas', MotoristaController::class);  // Rota para motoristas
 Route::resource('users', UserController::class);
 
-
-// 🔹 Rota para exibir PDFs diretamente pelo storage
+// Rota para exibir PDFs diretamente pelo storage
 Route::get('/motoristas/curso/{file}', function ($file) {
     $path = storage_path("app/public/motoristas_cursos/$file");
 

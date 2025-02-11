@@ -19,13 +19,8 @@
                         <th>Nome</th>
                         <th>Apelido</th>
                         <th>CPF</th>
-                        <th>Curso 1</th>
-                        <th>Curso 2</th>
                         <th>CNH</th>
                         <th>Vencimento CNH</th>
-                        <th>Comprovante Residência</th>
-                        <th>Antecedente Estadual</th>
-                        <th>Antecedente Federal</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -37,20 +32,6 @@
                             <td>{{ $motorista->apelido }}</td>
                             <td>{{ $motorista->cpf }}</td>
                             <td>
-                                @if ($motorista->curso_1)
-                                    <a href="{{ Storage::url($motorista->curso_1) }}" target="_blank" class="btn btn-info btn-sm">Ver Curso 1</a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
-                                @if ($motorista->curso_2)
-                                    <a href="{{ Storage::url($motorista->curso_2) }}" target="_blank" class="btn btn-info btn-sm">Ver Curso 2</a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
                                 @if ($motorista->cnh)
                                     <a href="{{ Storage::url($motorista->cnh) }}" target="_blank" class="btn btn-info btn-sm">Ver CNH</a>
                                 @else
@@ -59,27 +40,9 @@
                             </td>
                             <td>{{ $motorista->data_vencimento_cnh }}</td>
                             <td>
-                                @if ($motorista->comprovante_residencia)
-                                    <a href="{{ Storage::url($motorista->comprovante_residencia) }}" target="_blank" class="btn btn-info btn-sm">Ver</a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
-                                @if ($motorista->antecedente_estadual)
-                                    <a href="{{ Storage::url($motorista->antecedente_estadual) }}" target="_blank" class="btn btn-info btn-sm">Ver</a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
-                                @if ($motorista->antecedente_federal)
-                                    <a href="{{ Storage::url($motorista->antecedente_federal) }}" target="_blank" class="btn btn-info btn-sm">Ver</a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
+                                <a href="{{ route('motoristas.documentos', $motorista->id) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-file-alt"></i> Ver Documentos
+                                </a>
                                 <a href="{{ route('motoristas.edit', $motorista->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                 <form action="{{ route('motoristas.destroy', $motorista->id) }}" method="POST" style="display:inline;">
                                     @csrf
