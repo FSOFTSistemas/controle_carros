@@ -4,6 +4,7 @@ use App\Http\Controllers\MotoristaController;
 use App\Http\Controllers\VeiculoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MonitorController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,9 @@ Route::resource('veiculos', VeiculoController::class);
 Route::resource('monitores', MonitorController::class);
 
 Route::resource('motoristas', MotoristaController::class);
+
+Route::resource('users', UserController::class);
+
 
 // 🔹 Rota para exibir PDFs diretamente pelo storage
 Route::get('/motoristas/curso/{file}', function ($file) {
