@@ -70,6 +70,16 @@ class MotoristaController extends Controller
         return view('motoristas.edit', compact('motorista'));
     }
 
+    public function documentos($id)
+{
+    // Encontra o motorista pelo ID
+    $motorista = Motorista::findOrFail($id);
+
+    // Retorna a view com os documentos
+    return view('motoristas.documentos', compact('motorista'));
+}
+
+
     public function update(Request $request, $id)
     {
         $motorista = Motorista::findOrFail($id);
@@ -132,5 +142,14 @@ class MotoristaController extends Controller
         $motorista->delete();
 
         return redirect()->route('motoristas.index')->with('success', 'Motorista excluído com sucesso!');
+    }
+
+    // Método para mostrar detalhes do motorista
+    public function show($id)
+    {
+        $motorista = Motorista::findOrFail($id);
+
+        // Passa os dados do motorista para a view
+        return view('motoristas.show', compact('motorista'));
     }
 }
