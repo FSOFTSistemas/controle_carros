@@ -21,19 +21,24 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        try {
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                        'email' => 'required|email|unique:users,email',
+                        'password' => 'required|min:8',
+                    ]);
 
-        return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
+                    User::create([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password),
+                    ]);
+
+                    return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     public function edit(User $user)
@@ -61,7 +66,11 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->delete();
-        return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
+        try {
+            $user->delete();
+            return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }
