@@ -12,9 +12,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>{{$motorista}}
-                    </h3>
-
+                    <h3>{{$motorista}}</h3>
                     <p>Motoristas</p>
                 </div>
                 <div class="icon">
@@ -28,7 +26,6 @@
             <div class="small-box bg-success">
                 <div class="inner">
                     <h3>{{$veiculo}}</h3>
-
                     <p>Veículos</p>
                 </div>
                 <div class="icon">
@@ -42,7 +39,6 @@
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>{{$monitor}}</h3>
-
                     <p>Monitores</p>
                 </div>
                 <div class="icon">
@@ -56,7 +52,6 @@
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>{{ $users }}</h3>
-
                     <p>Usuários cadastrados</p>
                 </div>
                 <div class="icon">
@@ -65,8 +60,22 @@
             </div>
         </div>
         <!-- ./col -->
+        <!-- Card Endereços -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-secondary">
+                <div class="inner">
+                    <h3>{{ $enderecos }}</h3>
+                    <p>Endereços</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-map"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
     </div>
-<br><br>
+    <br><br>
     <section class="mb-5">
         <h3 class="text-center mb-4">Ações Rápidas</h3>
         <div class="row">
@@ -78,7 +87,7 @@
                     </div>
                 </a>
             </div>
-    
+
             <!-- Card Motoristas -->
             <div class="col-lg-3 col-md-6 mb-3">
                 <a href="{{ route('motoristas.index') }}" class="card text-dark border-light shadow-sm h-100">
@@ -87,7 +96,7 @@
                     </div>
                 </a>
             </div>
-    
+
             <!-- Card Monitores -->
             <div class="col-lg-3 col-md-6 mb-3">
                 <a href="{{ route('monitores.index') }}" class="card text-dark border-light shadow-sm h-100">
@@ -96,12 +105,21 @@
                     </div>
                 </a>
             </div>
-    
+
             <!-- Card Usuários -->
             <div class="col-lg-3 col-md-6 mb-3">
                 <a href="{{ route('users.index') }}" class="card text-dark border-light shadow-sm h-100">
                     <div class="card-body">
                         <h5 class="card-title text-center"><i class="fas fa-users-cog"></i> Usuários</h5>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card Endereços -->
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ route('enderecos.index') }}" class="card text-dark border-light shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><i class="fas fa-map-marker-alt"></i> Endereços</h5>
                     </div>
                 </a>
             </div>

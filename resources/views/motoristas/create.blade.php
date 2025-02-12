@@ -13,15 +13,18 @@
                 @csrf
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" class="form-control" required>
+                    <input type="text" name="nome" class="form-control" value="{{ old('nome') }}" required
+                        oninput="this.value = this.value.toUpperCase();">
                 </div>
                 <div class="form-group">
                     <label for="apelido">Apelido</label>
-                    <input type="text" name="apelido" class="form-control">
+                    <input type="text" name="apelido" class="form-control" value="{{ old('apelido') }}"
+                        oninput="this.value = this.value.toUpperCase();">
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" class="form-control" required>
+                    <input type="text" name="cpf" class="form-control" oninput="mascaraCPF(this)" required
+                        value="{{ old('cpf') }}">
                 </div>
                 <div class="form-group">
                     <label for="curso_1">Curso 1 (PDF)</label>
@@ -65,3 +68,15 @@
         </div>
     </div>
 @endsection
+
+@section('js')
+    <script>
+        // Função para aplicar a máscara de CPF
+        function mascaraCPF(cpf) {
+            var v = cpf.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            if (v.length <= 11) {
+                cpf.value = v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            }
+        }
+    </script>
+@stop

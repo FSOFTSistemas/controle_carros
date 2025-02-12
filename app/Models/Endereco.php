@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Endereco extends Model
 {
     use HasFactory;
-    protected $fillable =[
-        "logradouro",
-        "numero",
-        "bairro",
-        "cep",
-        "uf",
+
+    // Definindo os campos que são permitidos para preenchimento em massa (mass-assignment)
+    protected $fillable = [
+        'logradouro',
+        'numero',
+        'bairro',
+        'cep',
+        'uf',
     ];
 }

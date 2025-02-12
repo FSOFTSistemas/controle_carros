@@ -6,6 +6,7 @@ use App\Models\Monitor;
 use App\Models\Motorista;
 use App\Models\User;
 use App\Models\Veiculo;
+use App\Models\Endereco; // Adicionando o modelo Endereco
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,6 +32,8 @@ class HomeController extends Controller
         $motorista = Motorista::count();
         $monitor = Monitor::count();
         $users = User::count();
-        return view('home', compact('veiculo', 'motorista', 'monitor', 'users'));
+        $enderecos = Endereco::count(); // Contando o número de endereços
+
+        return view('home', compact('veiculo', 'motorista', 'monitor', 'users', 'enderecos')); // Passando a variável 'enderecos'
     }
 }

@@ -15,6 +15,27 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    @yield('css')
+    <style>
+        /* Aplica texto em maiúsculas para os campos de entrada */
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="password"],
+        textarea,
+        select {
+            text-transform: uppercase;
+        }
+
+        /* Caso tenha campos específicos de endereço como logradouro, bairro, uf */
+        input[name="logradouro"],
+        input[name="bairro"],
+        input[name="uf"] {
+            text-transform: uppercase;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -30,7 +51,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <!-- Add Endereços link here -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('enderecos.index') }}">{{ __('Endereços') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

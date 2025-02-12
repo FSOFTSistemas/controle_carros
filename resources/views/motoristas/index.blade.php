@@ -46,7 +46,7 @@
                             <i class="fas fa-file-alt"></i> Ver Documentos
                         </a>
                         <a href="{{ route('motoristas.edit', $motorista->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        
+
                         <!-- Botão de exclusão com SweetAlert2 -->
                         <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $motorista->id }}">Excluir</button>
 

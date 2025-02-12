@@ -33,6 +33,10 @@ class MotoristaController extends Controller
             'antecedente_federal' => 'required|file|mimes:pdf',
         ]);
 
+        // Forçar a conversão de nome e apelido para maiúsculas
+        $nome = strtoupper($request->nome);
+        $apelido = strtoupper($request->apelido);
+
         // Salva os arquivos no storage
         $curso1Path = $request->file('curso_1')->store('motoristas/cursos', 'public');
         $curso2Path = $request->file('curso_2')->store('motoristas/cursos', 'public');
@@ -42,8 +46,8 @@ class MotoristaController extends Controller
         $federalPath = $request->file('antecedente_federal')->store('motoristas/antecedentes', 'public');
 
         Motorista::create([
-            'nome' => $request->nome,
-            'apelido' => $request->apelido,
+            'nome' => $nome,
+            'apelido' => $apelido,
             'cpf' => $request->cpf,
             'curso_1' => $curso1Path,
             'curso_2' => $curso2Path,
@@ -79,6 +83,10 @@ class MotoristaController extends Controller
             'data_vencimento_cnh' => 'required|date',
         ]);
 
+        // Forçar a conversão de nome e apelido para maiúsculas
+        $motorista->nome = strtoupper($request->nome);
+        $motorista->apelido = strtoupper($request->apelido);
+
         if ($request->hasFile('curso_1')) {
             Storage::disk('public')->delete($motorista->curso_1);
             $motorista->curso_1 = $request->file('curso_1')->store('motoristas/cursos', 'public');
@@ -105,7 +113,7 @@ class MotoristaController extends Controller
         }
 
         $motorista->update($request->only([
-            'nome', 'apelido', 'cpf', 'data_vencimento_cnh',
+            'cpf', 'data_vencimento_cnh',
         ]));
 
         return redirect()->route('motoristas.index')->with('success', 'Motorista atualizado com sucesso!');
