@@ -38,10 +38,9 @@
         <div class="row">
             <div class="col-6">
                 <div class="input-group has-validation mb-2">
-                    <span class="input-group-text"><i class="fa fa-cogs" aria-hidden="true"></i></span>
                     <div class="form-floating">
                         <input class="form-control" type="text" name="nome" id="nome" placeholder="Nome" required
-                            value="{{ old('nome', $monitor->nome ?? '') }}">
+                            value="{{ old('nome', $monitor->nome ?? '') }}" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '').toUpperCase()">
                         <label for="nome">Nome</label>
                     </div>
                     <div class="invalid-feedback">Informe um nome.</div>
@@ -52,7 +51,7 @@
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
                         <input class="form-control" type="text" name="apelido" id="apelido" placeholder="apelido"
-                            required maxlength="50" value="{{ old('apelido', $monitor->apelido ?? '') }}">
+                            required maxlength="50" value="{{ old('apelido', $monitor->apelido ?? '') }}" oninput="this.value = this.value.toUpperCase()">
                         <label for="apelido">Apelido</label>
                     </div>
                     <div class="invalid-feedback">Informe um apelido válido.</div>
@@ -76,7 +75,7 @@
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
                         <input class="form-control" type="text" name="telefone" id="telefone" placeholder="telefone"
-                            required minlength="8" value="{{ old('telefone', $monitor->telefone ?? '') }}">
+                            required minlength="8" value="{{ old('telefone', $monitor->telefone ?? '') }}" >
                         <label for="telefone">Telefone</label>
                     </div>
                     <div class="invalid-feedback">Informe um telefone válido.</div>
@@ -90,7 +89,7 @@
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
                         <input class="form-control" type="text" name="logradouro" id="logradouro"
-                            placeholder="Logradouro" required value="{{ old('logradouro', $monitor->endereco->logradouro ?? '') }}">
+                            placeholder="Logradouro" required value="{{ old('logradouro', $monitor->endereco->logradouro ?? '') }}" oninput="this.value = this.value.toUpperCase()">
                         <label for="logradouro">Logradouro</label>
                     </div>
                     <div class="invalid-feedback">Informe o logradouro do endereço.</div>
@@ -114,7 +113,7 @@
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
                         <input class="form-control" type="text" name="bairro" id="bairro" placeholder="Bairro"
-                            required value="{{ old('bairro', $monitor->endereco->bairro ?? '') }}">
+                            required value="{{ old('bairro', $monitor->endereco->bairro ?? '') }}" oninput="this.value = this.value.toUpperCase()">
                         <label for="bairro">Bairro</label>
                     </div>
                     <div class="invalid-feedback">Informe o bairro do endereço.</div>
@@ -138,7 +137,7 @@
                 <div class="input-group has-validation mb-2">
                     <div class="form-floating">
                         <input class="form-control" type="text" name="uf" id="uf" placeholder="UF" required
-                            value="{{ old('uf', $monitor->endereco->uf ?? '') }}" maxlength="2">
+                            value="{{ old('uf', $monitor->endereco->uf ?? '') }}" maxlength="2" oninput="this.value = this.value.toUpperCase()">
                         <label for="uf">UF</label>
                     </div>
                     <div class="invalid-feedback">Informe a UF do endereço.</div>
@@ -162,6 +161,7 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <script>
         (() => {
@@ -180,5 +180,24 @@
                 }, false)
             })
         })()
+
+        </script>
+        <script>
+        $(document).ready(function () {
+            $('#cpf').mask('000.000.000-00');
+            $('#telefone').mask('(00) 90000-0000');
+            $('#cep').mask('00000-000');
+            $('#numero').on('input', function () {
+                this.value = this.value.replace(/\D/g, '');
+
+            $('#uf').on('input', function () {
+                let validUFs = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
+                let inputUF = $(this).val().toUpperCase();
+                if (!validUFs.includes(inputUF) && inputUF.length === 2) {
+                    $(this).val('');
+                }
+            });
+        });
+    });
     </script>
 @stop
