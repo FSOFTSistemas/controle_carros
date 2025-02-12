@@ -58,8 +58,8 @@
                             style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Tem certeza?')">Excluir</button>
+                            <button type="submit" class="btn btn-danger btn-sm btn-delete"
+                                >Excluir</button>
                         </form>
                     </td>
                 </tr>
@@ -124,6 +124,7 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
@@ -146,6 +147,35 @@
                 $('#modal-bairro').text($(this).data('bairro'));
                 $('#modal-cep').text($(this).data('cep'));
                 $('#modal-uf').text($(this).data('uf'));
+            });
+        });
+
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sucesso!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            let form = $(this).closest("form");
+
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Esta ação não pode ser desfeita!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
             });
         });
     </script>

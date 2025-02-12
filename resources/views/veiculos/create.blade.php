@@ -18,10 +18,10 @@
     </section>
 
     <form class="row needs-validation" novalidate
-          action="{{ isset($veiculo) ? route('veiculos.update', $veiculo->id) : route('veiculos.store') }}"
-          method="POST" enctype="multipart/form-data">
+        action="{{ isset($veiculo) ? route('veiculos.update', $veiculo->id) : route('veiculos.store') }}" method="POST"
+        enctype="multipart/form-data">
         @csrf
-        @if(isset($veiculo))
+        @if (isset($veiculo))
             @method('PUT')
         @endif
 
@@ -61,7 +61,8 @@
                             <div class="form-floating">
                                 <input class="form-control" type="text" name="modelo" id="modelo"
                                     placeholder="Modelo" required maxlength="50"
-                                    value="{{ old('modelo', $veiculo->modelo ?? '') }}">
+                                    value="{{ old('modelo', $veiculo->modelo ?? '') }}"
+                                    oninput="this.value = this.value.toUpperCase()">
                                 <label for="modelo">Modelo</label>
                             </div>
                             <div class="invalid-feedback">Informe um modelo válido.</div>
@@ -74,8 +75,8 @@
                         <div class="input-group has-validation mb-2">
                             <div class="form-floating">
                                 <input class="form-control" type="number" name="ano" id="ano" placeholder="2025"
-                                    required value="{{ old('ano', $veiculo->ano ?? '') }}"
-                                    min="1900" max="{{ date('Y') }}">
+                                    required value="{{ old('ano', $veiculo->ano ?? '') }}" min="1900"
+                                    max="{{ date('Y') }}">
                                 <label for="ano">Ano</label>
                             </div>
                             <div class="invalid-feedback">Informe um ano válido.</div>
@@ -87,7 +88,8 @@
                             <div class="form-floating">
                                 <input class="form-control" type="text" name="cor" id="cor"
                                     placeholder="Branco" required maxlength="30"
-                                    value="{{ old('cor', $veiculo->cor ?? '') }}">
+                                    value="{{ old('cor', $veiculo->cor ?? '') }}"
+                                    oninput="this.value = this.value.toUpperCase()">
                                 <label for="cor">Cor</label>
                             </div>
                             <div class="invalid-feedback">Informe uma cor válida.</div>
@@ -100,7 +102,8 @@
                         <div class="col-md-6 col-12">
                             <div class="input-group has-validation mb-2">
                                 <div class="form-floating">
-                                    <input class="form-control" type="file" name="{{ $doc }}" id="{{ $doc }}" accept="application/pdf">
+                                    <input class="form-control" type="file" name="{{ $doc }}"
+                                        id="{{ $doc }}" accept="application/pdf">
                                     <label for="{{ $doc }}">{{ ucfirst(str_replace('_', ' ', $doc)) }}</label>
                                 </div>
                             </div>
@@ -161,5 +164,32 @@
                 }, false)
             })
         })()
+    </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            const placaInput = document.getElementById("placa");
+
+            placaInput.addEventListener("input", function () {
+                let valor = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+                let inicio = valor.substring(0, 3).replace(/[^A-Z]/g, "");
+                let restante = valor.substring(3);
+                if (inicio.length === 3) {
+                    valor = inicio + "-" + restante;
+                } else {
+                    valor = inicio + restante;
+                }
+                if (valor.length > 4 && !/[0-9]/.test(valor[4])) {
+                    valor = valor.substring(0, 4);
+                }
+                if (valor.length > 5 && !/[A-Z0-9]/.test(valor[5])) {
+                    valor = valor.substring(0, 5);
+                }
+
+                valor = valor.substring(0, 6) + valor.substring(6, 9).replace(/[^0-9]/g, "");
+                this.value = valor.substring(0, 8);
+            });
+        });
+    </script>
     </script>
 @stop
