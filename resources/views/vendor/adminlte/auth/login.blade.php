@@ -2,6 +2,25 @@
 
 @section('adminlte_css_pre')
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+
+    <style>
+        /* Adicionando a imagem de fundo */
+        .login-page {
+            background: url('{{ asset('img/frota.jpeg') }}') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            height: 100vh;
+        }
+
+        /* Criando a sobrecarga com sombra */
+        .login-box {
+            background: rgba(255, 255, 255, 0.8); /* Sombra com fundo branco transparente */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 1); /* Sombras sutis */
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+    </style>
 @stop
 
 @php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
