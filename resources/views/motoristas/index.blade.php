@@ -8,7 +8,6 @@
 
 @section('content')
 
-
     <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('motoristas.create') }}" class="btn btn-success">
             <i class="fas fa-plus"></i> Adicionar Motorista
@@ -36,8 +35,7 @@
                     <td>{{ $motorista->cpf }}</td>
                     <td>
                         @if ($motorista->cnh)
-                            <a href="{{ Storage::url($motorista->cnh) }}" target="_blank" class="btn btn-info btn-sm">Ver
-                                CNH</a>
+                            <a href="{{ Storage::url($motorista->cnh) }}" target="_blank" class="btn btn-info btn-sm">Ver CNH</a>
                         @else
                             -
                         @endif
@@ -48,12 +46,14 @@
                             <i class="fas fa-file-alt"></i> Ver Documentos
                         </a>
                         <a href="{{ route('motoristas.edit', $motorista->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('motoristas.destroy', $motorista->id) }}" method="POST"
-                            style="display:inline;">
+                        
+                        <!-- Botão de exclusão com SweetAlert2 -->
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $motorista->id }}">Excluir</button>
+
+                        <!-- Formulário oculto para exclusão -->
+                        <form id="delete-form-{{ $motorista->id }}" action="{{ route('motoristas.destroy', $motorista->id) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Tem certeza?')">Excluir</button>
                         </form>
                     </td>
                 </tr>
@@ -72,6 +72,7 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
@@ -82,6 +83,37 @@
                 responsive: true,
                 autoWidth: false
             });
+
+            // SweetAlert2 para exclusão
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    let motoristaId = this.getAttribute('data-id');
+                    Swal.fire({
+                        title: 'Tem certeza?',
+                        text: "Esta ação não pode ser desfeita!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sim, excluir!',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('delete-form-' + motoristaId).submit();
+                        }
+                    });
+                });
+            });
         });
+
+        // Exibir notificação de sucesso
+        @if(session('success'))
+            Swal.fire({
+                title: 'Sucesso!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
     </script>
 @endsection

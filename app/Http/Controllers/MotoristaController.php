@@ -10,22 +10,17 @@ class MotoristaController extends Controller
 {
     public function index()
     {
-        // Recupera todos os motoristas
         $motoristas = Motorista::all();
-
-        // Passa os motoristas para a view
         return view('motoristas.index', compact('motoristas'));
     }
 
     public function create()
     {
-        // Renderiza o formulário de criação
         return view('motoristas.create');
     }
 
     public function store(Request $request)
     {
-        // Validação dos campos
         $request->validate([
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string|max:14|unique:motoristas',
@@ -46,7 +41,6 @@ class MotoristaController extends Controller
         $estadualPath = $request->file('antecedente_estadual')->store('motoristas/antecedentes', 'public');
         $federalPath = $request->file('antecedente_federal')->store('motoristas/antecedentes', 'public');
 
-        // Cria o registro no banco de dados
         Motorista::create([
             'nome' => $request->nome,
             'apelido' => $request->apelido,
@@ -60,7 +54,6 @@ class MotoristaController extends Controller
             'antecedente_federal' => $federalPath,
         ]);
 
-        // Redireciona para a lista de motoristas
         return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrado com sucesso!');
     }
 
@@ -71,27 +64,21 @@ class MotoristaController extends Controller
     }
 
     public function documentos($id)
-{
-    // Encontra o motorista pelo ID
-    $motorista = Motorista::findOrFail($id);
-
-    // Retorna a view com os documentos
-    return view('motoristas.documentos', compact('motorista'));
-}
-
+    {
+        $motorista = Motorista::findOrFail($id);
+        return view('motoristas.documentos', compact('motorista'));
+    }
 
     public function update(Request $request, $id)
     {
         $motorista = Motorista::findOrFail($id);
 
-        // Valida os dados
         $request->validate([
             'nome' => 'required|string|max:255',
             'cpf' => "required|string|max:14|unique:motoristas,cpf,{$motorista->id}",
             'data_vencimento_cnh' => 'required|date',
         ]);
 
-        // Atualiza os arquivos, se enviados
         if ($request->hasFile('curso_1')) {
             Storage::disk('public')->delete($motorista->curso_1);
             $motorista->curso_1 = $request->file('curso_1')->store('motoristas/cursos', 'public');
@@ -117,12 +104,10 @@ class MotoristaController extends Controller
             $motorista->antecedente_federal = $request->file('antecedente_federal')->store('motoristas/antecedentes', 'public');
         }
 
-        // Atualiza os dados do motorista
         $motorista->update($request->only([
             'nome', 'apelido', 'cpf', 'data_vencimento_cnh',
         ]));
 
-        // Redireciona para a lista
         return redirect()->route('motoristas.index')->with('success', 'Motorista atualizado com sucesso!');
     }
 
@@ -130,7 +115,6 @@ class MotoristaController extends Controller
     {
         $motorista = Motorista::findOrFail($id);
 
-        // Remove arquivos do storage
         Storage::disk('public')->delete($motorista->curso_1);
         Storage::disk('public')->delete($motorista->curso_2);
         Storage::disk('public')->delete($motorista->cnh);
@@ -138,18 +122,14 @@ class MotoristaController extends Controller
         Storage::disk('public')->delete($motorista->antecedente_estadual);
         Storage::disk('public')->delete($motorista->antecedente_federal);
 
-        // Deleta o motorista do banco de dados
         $motorista->delete();
 
         return redirect()->route('motoristas.index')->with('success', 'Motorista excluído com sucesso!');
     }
 
-    // Método para mostrar detalhes do motorista
     public function show($id)
     {
         $motorista = Motorista::findOrFail($id);
-
-        // Passa os dados do motorista para a view
         return view('motoristas.show', compact('motorista'));
     }
 }
