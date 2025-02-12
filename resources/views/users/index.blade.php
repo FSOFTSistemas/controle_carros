@@ -10,7 +10,7 @@
 
 
     <div class="d-flex justify-content-end mb-3">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">
             <i class="fas fa-user-plus"></i> Novo Usuário
         </button>
     </div>
