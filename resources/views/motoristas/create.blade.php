@@ -9,22 +9,22 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('motoristas.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('motoristas.store') }}" method="POST" enctype="multipart/form-data" id="motoristaForm">
                 @csrf
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" class="form-control" value="{{ old('nome') }}" required
+                    <input type="text" name="nome" class="form-control" value="{{ old('nome', $motorista->nome ?? '') }}" required
                         oninput="this.value = this.value.toUpperCase();">
                 </div>
                 <div class="form-group">
                     <label for="apelido">Apelido</label>
-                    <input type="text" name="apelido" class="form-control" value="{{ old('apelido') }}"
+                    <input type="text" name="apelido" class="form-control" value="{{ old('apelido', $motorista->apelido ?? '') }}"
                         oninput="this.value = this.value.toUpperCase();">
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" class="form-control" oninput="mascaraCPF(this)" required
-                        value="{{ old('cpf') }}">
+                    <input type="text" name="cpf" class="form-control" id="cpf" required
+                        value="{{ old('cpf', $motorista->cpf ?? '') }}">
                 </div>
                 <div class="form-group">
                     <label for="curso_1">Curso 1 (PDF)</label>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <label for="data_vencimento_cnh">Data de Vencimento da CNH</label>
-                    <input type="date" name="data_vencimento_cnh" class="form-control" required>
+                    <input type="date" name="data_vencimento_cnh" class="form-control" required value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh ?? '') }}">
                 </div>
                 <div class="form-group">
                     <label for="comprovante_residencia">Comprovante de Residência (PDF)</label>
@@ -70,13 +70,25 @@
 @endsection
 
 @section('js')
-    <script>
-        // Função para aplicar a máscara de CPF
-        function mascaraCPF(cpf) {
-            var v = cpf.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-            if (v.length <= 11) {
-                cpf.value = v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+<script>
+    $(document).ready(function() {
+        // Aplica a máscara ao campo CPF
+        $('#cpf').mask('000.000.000-00');
+
+        // Forçando os campos a ficarem em maiúsculas ao digitar
+        $('#apelido, #nome').on('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        // Automatizando a formatação do CPF antes do envio do formulário
+        $('#motoristaForm').on('submit', function() {
+            var cpf = $('#cpf').val();
+            var cpfFormatted = cpf.replace(/\D/g, ''); // Remove qualquer caractere não numérico
+            if (cpfFormatted.length === 11) {
+                // Aplica a máscara para o CPF apenas se a quantidade de números for 11
+                $('#cpf').val(cpfFormatted.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'));
             }
-        }
-    </script>
+        });
+    });
+</script>
 @stop
