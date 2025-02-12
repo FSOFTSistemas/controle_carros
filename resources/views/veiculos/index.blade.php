@@ -13,7 +13,7 @@
         </a>
     </div>
 
-    <table id="veiculosTable" class="table table-striped table-bordered">
+    <table id="veiculosTable" class="table table-striped">
         <thead class="bg-primary text-white">
             <tr>
                 <th>ID</th>
