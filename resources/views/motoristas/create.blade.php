@@ -41,18 +41,26 @@
                 </div>
                 <div class="form-group">
                     <label for="comprovante_residencia">Comprovante de Residência (PDF)</label>
-                    <input type="file" name="comprovante_residencia" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="comprovante_residencia" class="form-control" accept="application/pdf"
+                        required>
                 </div>
                 <div class="form-group">
                     <label for="antecedente_estadual">Antecedente Estadual (PDF)</label>
-                    <input type="file" name="antecedente_estadual" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="antecedente_estadual" class="form-control" accept="application/pdf"
+                        required>
                 </div>
                 <div class="form-group">
                     <label for="antecedente_federal">Antecedente Federal (PDF)</label>
                     <input type="file" name="antecedente_federal" class="form-control" accept="application/pdf" required>
                 </div>
-                <button type="submit" class="btn btn-success">Salvar</button>
-                <a href="{{ route('motoristas.index') }}" class="btn btn-secondary">Cancelar</a>
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-success w-50">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                    <a href="{{ route('motoristas.index') }}" class="btn btn-secondary w-50">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
             </form>
         </div>
     </div>

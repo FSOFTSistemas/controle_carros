@@ -23,7 +23,7 @@ Route::get('motoristas/{id}/documentos', [MotoristaController::class, 'documento
 // Rotas de recursos
 Route::resource('veiculos', VeiculoController::class);
 Route::resource('monitores', MonitorController::class);
-Route::resource('motoristas', MotoristaController::class);  // Rota para motoristas
+Route::resource('motoristas', MotoristaController::class);  
 Route::resource('users', UserController::class);
 
 // Rota para exibir PDFs diretamente pelo storage

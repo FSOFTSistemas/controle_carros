@@ -41,27 +41,29 @@ class UserController extends Controller
         }
     }
 
-    public function edit(User $user)
+    
+    public function update(Request $request, $id)
     {
-        return view('users.edit', compact('user'));
-    }
-
-    public function update(Request $request, User $user)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6|confirmed',
-        ]);
-
-        $data = $request->only(['name', 'email']);
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
+        
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'password' => 'nullable|min:6',
+            ]);
+    
+            $data = $request->only(['name', 'email']);
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password);
+            }
+    
+            $user = User::find($id);
+            $user->update($data);
+    
+            return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
-
-        $user->update($data);
-
-        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     public function destroy(User $user)
