@@ -20,7 +20,6 @@
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="/motoristas" class="small-box-footer">Acessar motoristas <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -35,7 +34,6 @@
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="/veiculos" class="small-box-footer">Acessar veículos <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -50,26 +48,65 @@
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="/monitores" class="small-box-footer">Acessar monitores <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        {{-- <!-- ./col -->
+        <!-- ./col -->
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3>{{ $users }}</h3>
 
-                    <p>Unique Visitors</p>
+                    <p>Usuários cadastrados</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col --> --}}
+        <!-- ./col -->
     </div>
+<br><br>
+    <section class="mb-5">
+        <h3 class="text-center mb-4">Ações Rápidas</h3>
+        <div class="row">
+            <!-- Card Veículos -->
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ route('veiculos.index') }}" class="card text-dark border-light shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><i class="fas fa-car"></i> Veículos</h5>
+                    </div>
+                </a>
+            </div>
+    
+            <!-- Card Motoristas -->
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ route('motoristas.index') }}" class="card text-dark border-light shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><i class="fas fa-user-tie"></i> Motoristas</h5>
+                    </div>
+                </a>
+            </div>
+    
+            <!-- Card Monitores -->
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ route('monitores.index') }}" class="card text-dark border-light shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><i class="fas fa-users"></i> Monitores</h5>
+                    </div>
+                </a>
+            </div>
+    
+            <!-- Card Usuários -->
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ route('users.index') }}" class="card text-dark border-light shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><i class="fas fa-users-cog"></i> Usuários</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
 @stop
 
 @section('css')
