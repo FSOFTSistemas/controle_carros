@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label for="cpf">CPF</label>
                     <input type="text" name="cpf" class="form-control" value="{{ old('cpf', $motorista->cpf) }}" required
-                        oninput="mascaraCPF(this)">
+                        id="cpf">
                 </div>
                 <div class="form-group">
                     <label for="curso_1">Curso 1 (PDF)</label>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <label for="data_vencimento_cnh">Data de Vencimento da CNH</label>
-                    <input type="date" name="data_vencimento_cnh" class="form-control" value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh) }}" required>
+                    <input type="date" name="data_vencimento_cnh" class="form-control" value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh) }}" required max="2100-12-31">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Salvar</button>
@@ -62,14 +62,12 @@
 @endsection
 
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script>
-        // Máscara para o campo CPF
-        function mascaraCPF(campo) {
-            var cpf = campo.value;
-            cpf = cpf.replace(/\D/g, '');  // Remove tudo o que não for número
-            cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-            campo.value = cpf;
-        }
+            $(document).ready(function() {
+        // Aplica a máscara ao campo CPF
+        $('#cpf').mask('000.000.000-00');
+    });
 
         // Forçando os campos a ficarem em maiúsculas ao digitar
         document.querySelectorAll('input[type="text"]').forEach(function(input) {

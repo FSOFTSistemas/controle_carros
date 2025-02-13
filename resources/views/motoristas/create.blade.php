@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <label for="data_vencimento_cnh">Data de Vencimento da CNH</label>
-                    <input type="date" name="data_vencimento_cnh" class="form-control" required value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh ?? '') }}">
+                    <input type="date" name="data_vencimento_cnh" class="form-control" required value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh ?? '') }}" max="2100-12-31">
                 </div>
                 <div class="form-group">
                     <label for="comprovante_residencia">Comprovante de Residência (PDF)</label>
@@ -70,6 +70,7 @@
 @endsection
 
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
     $(document).ready(function() {
         // Aplica a máscara ao campo CPF
@@ -78,16 +79,6 @@
         // Forçando os campos a ficarem em maiúsculas ao digitar
         $('#apelido, #nome').on('input', function() {
             this.value = this.value.toUpperCase();
-        });
-
-        // Automatizando a formatação do CPF antes do envio do formulário
-        $('#motoristaForm').on('submit', function() {
-            var cpf = $('#cpf').val();
-            var cpfFormatted = cpf.replace(/\D/g, ''); // Remove qualquer caractere não numérico
-            if (cpfFormatted.length === 11) {
-                // Aplica a máscara para o CPF apenas se a quantidade de números for 11
-                $('#cpf').val(cpfFormatted.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'));
-            }
         });
     });
 </script>
