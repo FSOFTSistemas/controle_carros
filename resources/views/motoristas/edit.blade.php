@@ -64,10 +64,21 @@
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script>
+<<<<<<< HEAD
+        // Máscara para o campo CPF
+        function mascaraCPF(campo) {
+            var cpf = campo.value;
+            cpf = cpf.replace(/\D/g, '');
+             // Remove tudo o que não for número
+            cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            campo.value = cpf;
+        }
+=======
             $(document).ready(function() {
         // Aplica a máscara ao campo CPF
         $('#cpf').mask('000.000.000-00');
     });
+>>>>>>> 5882015fda74476aa5a603ab9b3fea32524d2c9d
 
         // Forçando os campos a ficarem em maiúsculas ao digitar
         document.querySelectorAll('input[type="text"]').forEach(function(input) {
