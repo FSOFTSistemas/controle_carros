@@ -66,7 +66,8 @@
         // Máscara para o campo CPF
         function mascaraCPF(campo) {
             var cpf = campo.value;
-            cpf = cpf.replace(/\D/g, '');  // Remove tudo o que não for número
+            cpf = cpf.replace(/\D/g, '');
+             // Remove tudo o que não for número
             cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
             campo.value = cpf;
         }
