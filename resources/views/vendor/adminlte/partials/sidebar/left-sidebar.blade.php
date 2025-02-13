@@ -21,7 +21,7 @@
     </div>
 
     {{-- Copyright no rodapé da sidebar --}}
-    {{-- <div class="sidebar-footer mt-auto text-center">
+    <div class="sidebar-footer mt-auto text-center">
         <small>&copy; {{ date('Y') }} FSOFT SISTEMAS. Todos os direitos reservados.</small>
-    </div> --}}
+    </div>
 </aside>
