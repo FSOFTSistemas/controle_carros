@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string('modelo', 50);
             $table->string('ano', 4);
             $table->string('cor', 30);
-            $table->string('crlv');
+            $table->string('crlv')->nullable();
             $table->string('foto1')->nullable();
             $table->string('foto2')->nullable();
             $table->string('foto3')->nullable();
