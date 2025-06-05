@@ -24,43 +24,43 @@
 
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" id="cpf" class="form-control" required>
+                    <input type="text" name="cpf" id="cpf" class="form-control" >
                 </div>
 
                 <div class="form-group">
                     <label for="curso_1">Curso 1 (PDF)</label>
-                    <input type="file" name="curso_1" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="curso_1" class="form-control" accept="application/pdf" >
                 </div>
 
                 <div class="form-group">
                     <label for="curso_2">Curso 2 (PDF)</label>
-                    <input type="file" name="curso_2" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="curso_2" class="form-control" accept="application/pdf" >
                 </div>
 
                 <div class="form-group">
                     <label for="cnh">CNH (PDF)</label>
-                    <input type="file" name="cnh" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="cnh" class="form-control" accept="application/pdf" >
                 </div>
 
                 <div class="form-group">
                     <label for="data_vencimento_cnh">Data de Vencimento da CNH</label>
 
-                    <input type="date" name="data_vencimento_cnh" class="form-control" required value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh ?? '') }}" max="2100-12-31">
+                    <input type="date" name="data_vencimento_cnh" class="form-control"  value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh ?? '') }}" max="2100-12-31">
                 </div>
 
                 <div class="form-group">
                     <label for="comprovante_residencia">Comprovante de Residência (PDF)</label>
-                    <input type="file" name="comprovante_residencia" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="comprovante_residencia" class="form-control" accept="application/pdf" >
                 </div>
 
                 <div class="form-group">
                     <label for="antecedente_estadual">Antecedente Estadual (PDF)</label>
-                    <input type="file" name="antecedente_estadual" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="antecedente_estadual" class="form-control" accept="application/pdf" >
                 </div>
 
                 <div class="form-group">
                     <label for="antecedente_federal">Antecedente Federal (PDF)</label>
-                    <input type="file" name="antecedente_federal" class="form-control" accept="application/pdf" required>
+                    <input type="file" name="antecedente_federal" class="form-control" accept="application/pdf" >
                 </div>
 
                 <button type="submit" class="btn btn-success">Salvar</button>
