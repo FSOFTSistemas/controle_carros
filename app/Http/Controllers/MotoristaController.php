@@ -30,12 +30,12 @@ class MotoristaController extends Controller
         $apelido = strtoupper($request->apelido);
 
         // Inicializa os caminhos dos arquivos como null
-        $curso1Path = $request->hasFile('curso_1') ? $request->file('curso_1')->store('motoristas/cursos', 'public') : null;
-        $curso2Path = $request->hasFile('curso_2') ? $request->file('curso_2')->store('motoristas/cursos', 'public') : null;
-        $cnhPath = $request->hasFile('cnh') ? $request->file('cnh')->store('motoristas/cnh', 'public') : null;
-        $comprovantePath = $request->hasFile('comprovante_residencia') ? $request->file('comprovante_residencia')->store('motoristas/comprovantes', 'public') : null;
-        $estadualPath = $request->hasFile('antecedente_estadual') ? $request->file('antecedente_estadual')->store('motoristas/antecedentes', 'public') : null;
-        $federalPath = $request->hasFile('antecedente_federal') ? $request->file('antecedente_federal')->store('motoristas/antecedentes', 'public') : null;
+        $curso1Path = $request->hasFile('curso_1') ? $request->file('curso_1')->store('motoristas/cursos', 'public') : '';
+        $curso2Path = $request->hasFile('curso_2') ? $request->file('curso_2')->store('motoristas/cursos', 'public') : '';
+        $cnhPath = $request->hasFile('cnh') ? $request->file('cnh')->store('motoristas/cnh', 'public') : '';
+        $comprovantePath = $request->hasFile('comprovante_residencia') ? $request->file('comprovante_residencia')->store('motoristas/comprovantes', 'public') : '';
+        $estadualPath = $request->hasFile('antecedente_estadual') ? $request->file('antecedente_estadual')->store('motoristas/antecedentes', 'public') : '';
+        $federalPath = $request->hasFile('antecedente_federal') ? $request->file('antecedente_federal')->store('motoristas/antecedentes', 'public') : '';
 
         Motorista::create([
             'nome' => $nome,
