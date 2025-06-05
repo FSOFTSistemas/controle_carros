@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('cpf')->unique();
             $table->string('cnh')->nullable()->unique();
             $table->date('validade_cnh')->nullable();
-            $table->string('curso_1');
-            $table->string('curso_2');
-            $table->string('comprovante_residencia');
-            $table->string('antecedente_estadual');
-            $table->string('antecedente_federal');
+            $table->string('curso_1')->nullable();
+            $table->string('curso_2')->nullable();
+            $table->string('comprovante_residencia')->nullable();
+            $table->string('antecedente_estadual')->nullable();
+            $table->string('antecedente_federal')->nullable();
             $table->timestamps();
         });
     }

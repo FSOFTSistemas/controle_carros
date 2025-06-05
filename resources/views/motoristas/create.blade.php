@@ -44,11 +44,8 @@
 
                 <div class="form-group">
                     <label for="data_vencimento_cnh">Data de Vencimento da CNH</label>
-<<<<<<< HEAD
-                    <input type="date" name="data_vencimento_cnh" class="form-control" required>
-=======
+
                     <input type="date" name="data_vencimento_cnh" class="form-control" required value="{{ old('data_vencimento_cnh', $motorista->data_vencimento_cnh ?? '') }}" max="2100-12-31">
->>>>>>> 5882015fda74476aa5a603ab9b3fea32524d2c9d
                 </div>
 
                 <div class="form-group">
@@ -73,7 +70,6 @@
 @endsection
 
 @section('js')
-<<<<<<< HEAD
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -94,18 +90,4 @@
         });
     </script>
 @endsection
-=======
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Aplica a máscara ao campo CPF
-        $('#cpf').mask('000.000.000-00');
 
-        // Forçando os campos a ficarem em maiúsculas ao digitar
-        $('#apelido, #nome').on('input', function() {
-            this.value = this.value.toUpperCase();
-        });
-    });
-</script>
-@stop
->>>>>>> 5882015fda74476aa5a603ab9b3fea32524d2c9d

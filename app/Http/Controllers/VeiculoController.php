@@ -26,9 +26,6 @@ class VeiculoController extends Controller
         return view('veiculos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {

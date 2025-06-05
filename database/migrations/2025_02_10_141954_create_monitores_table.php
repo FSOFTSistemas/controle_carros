@@ -10,9 +10,9 @@ return new class extends Migration {
             $table->id();
             $table->string('nome');
             $table->string('apelido')->nullable();
-            $table->string('cpf', 14)->unique();
-            $table->string('telefone');
-            $table->unsignedBigInteger('endereco_id');
+            $table->string('cpf', 14)->unique()->nullable();
+            $table->string('telefone')->nullable();
+            $table->unsignedBigInteger('endereco_id')->nullable();
             $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');
             $table->timestamps();
         });
