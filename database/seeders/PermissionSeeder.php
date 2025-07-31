@@ -44,7 +44,6 @@ class PermissionSeeder extends Seeder
             'visualizar monitores',
             'visualizar usuários',
         ]);
-
         
     }
 }
