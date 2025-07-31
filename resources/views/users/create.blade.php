@@ -69,6 +69,23 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="permissions">Permissões</label>
+                            <select name="permissions[]" id="permissions" class="form-control" multiple>
+                                @foreach($permissions as $permission)
+                                    <option value="{{ $permission->name }}"
+                                        {{ (isset($user) && $user->hasPermissionTo($permission->name)) ? 'selected' : '' }}>
+                                        {{ ucfirst($permission->name) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small class="form-text text-muted">Segure Ctrl (Cmd no Mac) para selecionar múltiplas permissões.</small>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-success">Salvar</button>
 
             </form>

@@ -20,5 +20,11 @@ class Motorista extends Model
         'comprovante_residencia',
         'antecedente_estadual',
         'antecedente_federal',
+        'secretaria_id',
     ];
+
+    public function secretaria()
+    {
+        return $this->belongsTo(Secretaria::class);
+    }
 }

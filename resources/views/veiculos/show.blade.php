@@ -26,6 +26,7 @@
                 <li class="list-group-item"><strong>Modelo:</strong> {{ $veiculo->modelo }}</li>
                 <li class="list-group-item"><strong>Ano:</strong> {{ $veiculo->ano }}</li>
                 <li class="list-group-item"><strong>Cor:</strong> {{ $veiculo->cor }}</li>
+                <li class="list-group-item"><strong>Cor:</strong> {{ $veiculo->secretaria->nome }}</li>
             </ul>
         </div>
     </div>

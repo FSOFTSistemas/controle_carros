@@ -5,37 +5,46 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        $permissions = Permission::all();
+        return view('users.index', compact('users', 'permissions'));
     }
 
     public function create()
     {
-        return view('users.create');
+        $permissions = Permission::all();
+        return view('users.create', compact('permissions'));
     }
 
+    
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:4',
+                'permissions' => 'nullable|array',
+                'permissions.*' => 'string|exists:permissions,name',
+            ]);
 
-                    $request->validate([
-                        'name' => 'required|string|max:255',
-                        'email' => 'required|email|unique:users,email',
-                        'password' => 'required|min:8',
-                    ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-                    User::create([
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'password' => Hash::make($request->password),
-                    ]);
+            if ($request->has('permissions')) {
+                $user->syncPermissions($request->permissions);
+            }
 
-                    return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
+            return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -49,7 +58,9 @@ class UserController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'password' => 'nullable|min:6',
+                'password' => 'nullable|min:4',
+                'permissions' => 'nullable|array',
+                'permissions.*' => 'string|exists:permissions,name',
             ]);
     
             $data = $request->only(['name', 'email']);
@@ -57,8 +68,15 @@ class UserController extends Controller
                 $data['password'] = Hash::make($request->password);
             }
     
-            $user = User::find($id);
+            $user = User::findOrFail($id);
             $user->update($data);
+
+            if ($request->has('permissions')) {
+                $user->syncPermissions($request->permissions);
+            } else {
+                // Se nenhuma permissão enviada, remove todas
+                $user->syncPermissions([]);
+            }
     
             return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
         } catch (\Exception $e) {

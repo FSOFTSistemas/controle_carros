@@ -15,6 +15,7 @@
             <ul>
                 <li><strong>Nome:</strong> {{ $motorista->nome }}</li>
                 <li><strong>Apelido:</strong> {{ $motorista->apelido }}</li>
+                <li><strong>Secretaria:</strong> {{ $motorista->secretaria->nome ?? '-' }}</li>
                 <li><strong>CPF:</strong> {{ $motorista->cpf }}</li>
                 <li><strong>Vencimento da CNH:</strong> {{ $motorista->data_vencimento_cnh }}</li>
                 

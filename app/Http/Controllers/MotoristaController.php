@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Motorista;
+use App\Models\Secretaria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -10,27 +11,32 @@ class MotoristaController extends Controller
 {
     public function index()
     {
-        $motoristas = Motorista::all();
+        // Carregar motoristas com secretaria para evitar N+1
+        $motoristas = Motorista::with('secretaria')->get();
         return view('motoristas.index', compact('motoristas'));
     }
 
     public function create()
     {
-        return view('motoristas.create');
+        // Passar todas as secretarias para popular select no form
+        $secretarias = Secretaria::all();
+        return view('motoristas.create', compact('secretarias'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nome' => 'required|string|max:255',
+            'secretaria_id' => 'nullable|exists:secretarias,id',
+            'cpf' => 'required|string|max:14|unique:motoristas,cpf',
+            'data_vencimento_cnh' => 'required|date',
         ]);
 
         try {
-            // Forçar a conversão de nome e apelido para maiúsculas
+            // Forçar maiúsculas
             $nome = strtoupper($request->nome);
             $apelido = strtoupper($request->apelido);
 
-            // Inicializa os caminhos dos arquivos como null
             $curso1Path = $request->hasFile('curso_1') ? $request->file('curso_1')->store('motoristas/cursos', 'public') : '';
             $curso2Path = $request->hasFile('curso_2') ? $request->file('curso_2')->store('motoristas/cursos', 'public') : '';
             $cnhPath = $request->hasFile('cnh') ? $request->file('cnh')->store('motoristas/cnh', 'public') : '';
@@ -49,40 +55,35 @@ class MotoristaController extends Controller
                 'comprovante_residencia' => $comprovantePath,
                 'antecedente_estadual' => $estadualPath,
                 'antecedente_federal' => $federalPath,
+                'secretaria_id' => $request->secretaria_id ?? null,
             ]);
 
             return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrado com sucesso!');
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Erro ao cadastrar motorista, o cpf deve ser unico erro: ' . $e->getMessage());
+            // Tratar erro de forma amigável
+            return redirect()->back()->withInput()->with('error', 'Erro ao cadastrar motorista: ' . $e->getMessage());
         }
     }
 
     public function edit($id)
     {
         $motorista = Motorista::findOrFail($id);
-        return view('motoristas.edit', compact('motorista'));
-    }
-
-    public function documentos($id)
-    {
-        $motorista = Motorista::findOrFail($id);
-        return view('motoristas.documentos', compact('motorista'));
+        $secretarias = Secretaria::all();
+        return view('motoristas.edit', compact('motorista', 'secretarias'));
     }
 
     public function update(Request $request, $id)
     {
         try {
-            //code...
-
             $motorista = Motorista::findOrFail($id);
 
             $request->validate([
                 'nome' => 'required|string|max:255',
                 'cpf' => "required|string|max:14|unique:motoristas,cpf,{$motorista->id}",
                 'data_vencimento_cnh' => 'required|date',
+                'secretaria_id' => 'nullable|exists:secretarias,id',
             ]);
 
-            // Forçar a conversão de nome e apelido para maiúsculas
             $motorista->nome = strtoupper($request->nome);
             $motorista->apelido = strtoupper($request->apelido);
 
@@ -111,10 +112,12 @@ class MotoristaController extends Controller
                 $motorista->antecedente_federal = $request->file('antecedente_federal')->store('motoristas/antecedentes', 'public');
             }
 
-            $motorista->update($request->only([
-                'cpf',
-                'data_vencimento_cnh',
-            ]));
+            // Atualizar os campos restantes, incluindo secretaria_id
+            $motorista->cpf = $request->cpf;
+            $motorista->data_vencimento_cnh = $request->data_vencimento_cnh;
+            $motorista->secretaria_id = $request->secretaria_id ?? null;
+
+            $motorista->save();
 
             return redirect()->route('motoristas.index')->with('success', 'Motorista atualizado com sucesso!');
         } catch (\Exception $e) {
@@ -124,9 +127,7 @@ class MotoristaController extends Controller
 
     public function destroy($id)
     {
-
         try {
-
             $motorista = Motorista::findOrFail($id);
 
             Storage::disk('public')->delete($motorista->curso_1);
@@ -140,7 +141,7 @@ class MotoristaController extends Controller
 
             return redirect()->route('motoristas.index')->with('success', 'Motorista excluído com sucesso!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao deeletar motorista: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao deletar motorista: ' . $e->getMessage());
         }
     }
 
@@ -148,5 +149,11 @@ class MotoristaController extends Controller
     {
         $motorista = Motorista::findOrFail($id);
         return view('motoristas.show', compact('motorista'));
+    }
+
+    public function documentos($id)
+    {
+        $motorista = Motorista::findOrFail($id);
+        return view('motoristas.documentos', compact('motorista'));
     }
 }

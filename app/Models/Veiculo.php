@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Veiculo extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'placa',
         'modelo',
@@ -24,5 +25,11 @@ class Veiculo extends Model
         'vistoria',
         'autorizacao_te',
         'certificado_te', //te = transporte escolar
+        'secretaria_id',
     ];
+
+    public function secretaria()
+    {
+        return $this->belongsTo(Secretaria::class);
+    }
 }

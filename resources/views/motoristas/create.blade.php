@@ -28,6 +28,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="secretaria_id">Secretaria</label>
+                    <select name="secretaria_id" id="secretaria_id" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        @foreach ($secretarias as $secretaria)
+                            <option value="{{ $secretaria->id }}" {{ old('secretaria_id') == $secretaria->id ? 'selected' : '' }}>
+                                {{ $secretaria->nome }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="curso_1">Curso 1 (PDF)</label>
                     <input type="file" name="curso_1" class="form-control" accept="application/pdf" >
                 </div>

@@ -316,30 +316,42 @@ return [
             "icon" => 'fa fa-home',
             "text" => "Home",
             "url" => "/home",
+            "can" => "visualizar dashboard",
         ],
         [
             "type" => 'text',
             "icon" => 'fa fa-users',
             "text" => "Motorista",
             "url" => "/motoristas",
+            "can" => "visualizar motoristas",
         ],
         [
             "type" => 'text',
             "icon" => 'fa fa-car',
             "text" => "Veiculo",
             "url" => "/veiculos",
+            "can" => "visualizar veículos",
+        ],
+        [
+            "type" => 'text',
+            "icon" => 'fa fa-building',
+            "text" => "Secretaria",
+            "url" => "/secretarias",
+            "can" => "visualizar secretarias",
         ],
         [
             "type" => 'text',
             "icon" => 'fa fa-user',
             "text" => "Monitor",
             "url" => "/monitores",
+            "can" => "visualizar monitores",
         ],
         [
             "type" => 'text',
             "icon" => 'fa fa-user-circle',
             "text" => "Usuário",
             "url" => "/users",
+            "can" => "visualizar usuários",
         ]
     ],
 

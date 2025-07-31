@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Secretaria;
 use App\Models\Veiculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ class VeiculoController extends Controller
      */
     public function index()
     {
-        $veiculos = Veiculo::all();
+        $veiculos = Veiculo::with('secretaria')->get();
         return view('veiculos.index', compact('veiculos'));
     }
 
@@ -23,7 +24,8 @@ class VeiculoController extends Controller
      */
     public function create()
     {
-        return view('veiculos.create');
+        $secretarias = Secretaria::all();
+        return view('veiculos.create', compact('secretarias'));
     }
 
     public function store(Request $request)
@@ -45,6 +47,7 @@ class VeiculoController extends Controller
                 'foto4'          => 'nullable|image|mimes:jpeg,png',
                 'foto5'          => 'nullable|image|mimes:jpeg,png',
                 'foto6'          => 'nullable|image|mimes:jpeg,png',
+                'secretaria_id'  => 'nullable|exists:secretarias,id',
             ]);
 
             DB::transaction(function () use (&$data, $request) {
@@ -100,6 +103,7 @@ class VeiculoController extends Controller
                     'foto4' => $data['foto4'] ?? null,
                     'foto5' => $data['foto5'] ?? null,
                     'foto6' => $data['foto6'] ?? null,
+                    'secretaria_id' => $data['secretaria_id'] ?? null,
                 ]);
             });
 
@@ -110,23 +114,16 @@ class VeiculoController extends Controller
         }
     }
 
-
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Veiculo $veiculo)
     {
         return view('veiculos.show', compact('veiculo'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
-        $veiculo = Veiculo::findOrFail($id);
-        return view('veiculos.create', compact('veiculo')); // Passa o $veiculo para edição
+        $veiculo = Veiculo::with('secretaria')->findOrFail($id);
+        $secretarias = Secretaria::all();
+        return view('veiculos.create', compact('veiculo', 'secretarias')); // Passa o $veiculo para edição
     }
 
     /**
@@ -154,10 +151,13 @@ class VeiculoController extends Controller
             'foto4' => 'nullable|image|mimes:jpeg,png',
             'foto5' => 'nullable|image|mimes:jpeg,png',
             'foto6' => 'nullable|image|mimes:jpeg,png',
+            'secretaria_id' => 'nullable|exists:secretarias,id',
         ]);
 
         // Atualiza os campos básicos
         $veiculo->update($request->except(['crlv', 'tacografo', 'vistoria', 'autorizacao_te', 'certificado_te', 'foto1', 'foto2', 'foto3', 'foto4', 'foto5', 'foto6']));
+
+        $veiculo->secretaria_id = $request->secretaria_id;
 
         // Processamento de arquivos (se novos arquivos foram enviados, substitui os antigos)
         $documentos = ['crlv', 'tacografo', 'vistoria', 'autorizacao_te', 'certificado_te'];

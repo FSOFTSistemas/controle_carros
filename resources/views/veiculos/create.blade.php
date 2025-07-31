@@ -97,6 +97,32 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-2 text-end">
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalNovaSecretaria">
+                                Nova Secretaria
+                            </button>
+                        </div>
+                        <div class="input-group has-validation mb-2">
+                            <div class="form-floating">
+                                <select class="form-select" name="secretaria_id" id="secretaria_id" required>
+                                    <option value="" disabled {{ old('secretaria_id', $veiculo->secretaria_id ?? '') ? '' : 'selected' }}>Selecione</option>
+                                    @foreach ($secretarias ?? [] as $secretaria)
+                                        <option value="{{ $secretaria->id }}"
+                                            {{ old('secretaria_id', $veiculo->secretaria_id ?? '') == $secretaria->id ? 'selected' : '' }}>
+                                            {{ $secretaria->nome }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <label for="secretaria_id">Secretaria</label>
+                            </div>
+                            <div class="invalid-feedback">Selecione uma secretaria.</div>
+                        </div>
+                    </div>
+                </div>
+                
+
                 @foreach (['crlv', 'tacografo', 'vistoria', 'autorizacao_te', 'certificado_te'] as $doc)
                     <div class="row">
                         <div class="col-md-6 col-12">
@@ -134,6 +160,30 @@
             <button type="submit" class="btn btn-outline-success w-25">Salvar</button>
         </div>
     </form>
+    <!-- Modal Nova Secretaria -->
+    <div class="modal fade" id="modalNovaSecretaria" tabindex="-1" aria-labelledby="modalNovaSecretariaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('secretarias.store') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalNovaSecretariaLabel">Cadastrar Nova Secretaria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nova_secretaria_nome" class="form-label">Nome da Secretaria</label>
+                            <input type="text" class="form-control" name="nome" id="nova_secretaria_nome" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')

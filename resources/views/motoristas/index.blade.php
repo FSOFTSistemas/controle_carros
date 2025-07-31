@@ -20,6 +20,7 @@
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Apelido</th>
+                <th>Secretaria</th>
                 <th>CPF</th>
                 <th>CNH</th>
                 <th>Vencimento CNH</th>
@@ -32,6 +33,7 @@
                     <td>{{ $motorista->id }}</td>
                     <td>{{ $motorista->nome }}</td>
                     <td>{{ $motorista->apelido }}</td>
+                    <td>{{ $motorista->secretaria->nome ?? '-' }}</td>
                     <td>{{ $motorista->cpf }}</td>
                     <td>
                         @if ($motorista->cnh)
