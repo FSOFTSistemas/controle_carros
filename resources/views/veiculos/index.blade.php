@@ -33,7 +33,7 @@
                     <td>{{ $veiculo->modelo }}</td>
                     <td>{{ $veiculo->ano }}</td>
                     <td>{{ $veiculo->cor }}</td>
-                    <td>{{ $veiculo->secretaria->nome }}</td>
+                    <td>{{ $veiculo->secretaria->nome ?? '-'}}</td>
                     <td>
                         <a href="{{ route('veiculos.show', $veiculo->id) }}" class="btn btn-info btn-sm">Ver</a>
                         <a href="{{ route('veiculos.edit', $veiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
