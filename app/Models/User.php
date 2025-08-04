@@ -24,6 +24,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function secretarias()
+    {
+        return $this->belongsToMany(Secretaria::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

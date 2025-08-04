@@ -22,4 +22,9 @@ class Secretaria extends Model
     {
         return $this->hasMany(Motorista::class);
     }
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

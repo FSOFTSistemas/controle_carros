@@ -21,8 +21,17 @@
                         <input type="password" class="form-control" name="password" required>
                     </div>
                     <div class="mb-3">
+                        <label for="secretarias" class="form-label">Secretarias</label>
+                        <select name="secretarias[]" id="secretarias" class="form-control select2" multiple>
+                            @foreach($secretarias ?? [] as $secretaria)
+                                <option value="{{ $secretaria->id }}">{{ $secretaria->nome }}</option>
+                            @endforeach
+                        </select>
+                        <small class="form-text text-muted">Segure Ctrl (Cmd no Mac) para selecionar múltiplas secretarias.</small>
+                    </div>
+                    <div class="mb-3">
                         <label for="permissions" class="form-label">Permissões</label>
-                        <select name="permissions[]" id="permissions" class="form-control" multiple>
+                        <select name="permissions[]" id="permissions" class="form-control select2" multiple>
                             @foreach($permissions as $permission)
                                 <option value="{{ $permission->name }}">{{ ucfirst($permission->name) }}</option>
                             @endforeach
@@ -35,3 +44,13 @@
         </div>
     </div>
 </div>
+@push('js')
+<script>
+    $('#createUserModal').on('shown.bs.modal', function () {
+        $('.select2').select2({
+            dropdownParent: $('#createUserModal'),
+            width: '100%'
+        });
+    });
+</script>
+@endpush

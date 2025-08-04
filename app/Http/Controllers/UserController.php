@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Secretaria;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,13 +14,15 @@ class UserController extends Controller
     {
         $users = User::all();
         $permissions = Permission::all();
-        return view('users.index', compact('users', 'permissions'));
+        $secretarias = Secretaria::all();
+        return view('users.index', compact('users', 'permissions', 'secretarias'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
-        return view('users.create', compact('permissions'));
+        $secretarias = Secretaria::all();
+        return view('users.create', compact('permissions', 'secretarias'));
     }
 
     
@@ -30,6 +33,8 @@ class UserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:4',
+                'secretarias' => 'nullable|array',
+                'secretarias.*' => 'integer|exists:secretarias,id',
                 'permissions' => 'nullable|array',
                 'permissions.*' => 'string|exists:permissions,name',
             ]);
@@ -39,6 +44,10 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
+
+            if ($request->has('secretarias')) {
+                $user->secretarias()->sync($request->secretarias);
+            }
 
             if ($request->has('permissions')) {
                 $user->syncPermissions($request->permissions);
@@ -59,6 +68,8 @@ class UserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email,' . $id,
                 'password' => 'nullable|min:4',
+                'secretarias' => 'nullable|array',
+                'secretarias.*' => 'integer|exists:secretarias,id',
                 'permissions' => 'nullable|array',
                 'permissions.*' => 'string|exists:permissions,name',
             ]);
@@ -70,6 +81,10 @@ class UserController extends Controller
     
             $user = User::findOrFail($id);
             $user->update($data);
+
+            if ($request->has('secretarias')) {
+                $user->secretarias()->sync($request->secretarias);
+            }
 
             if ($request->has('permissions')) {
                 $user->syncPermissions($request->permissions);

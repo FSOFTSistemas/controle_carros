@@ -70,6 +70,23 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="secretaria_id">Secretaria</label>
+                            <select name="secretaria_id" id="secretaria_id" class="form-control">
+                                <option value="">Selecione...</option>
+                                @foreach($secretarias as $secretaria)
+                                    <option value="{{ $secretaria->id }}"
+                                        {{ old('secretaria_id', $user->secretaria_id ?? '') == $secretaria->id ? 'selected' : '' }}>
+                                        {{ $secretaria->nome }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="permissions">Permissões</label>

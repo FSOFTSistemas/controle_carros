@@ -9,6 +9,17 @@
             <div class="modal-body">
                 <p><strong>Nome:</strong> <span id="userName">{{$user->name}}</span></p>
                 <p><strong>Email:</strong> <span id="userEmail"></span>{{$user->email}}</p>
+                <p><strong>Secretarias:</strong>
+                    @if($user->secretarias->isNotEmpty())
+                        <ul class="mb-0">
+                            @foreach($user->secretarias as $secretaria)
+                                <li>{{ $secretaria->nome }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        Nenhuma secretaria vinculada.
+                    @endif
+                </p>
             </div>
         </div>
     </div>
