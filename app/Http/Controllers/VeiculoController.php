@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Secretaria;
 use App\Models\Veiculo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -15,7 +16,14 @@ class VeiculoController extends Controller
      */
     public function index()
     {
-        $veiculos = Veiculo::with('secretaria')->get();
+        // Pega os IDs das secretarias que o usuário está relacionado
+        $secretariaIds = Auth::user()->secretarias()->pluck('id');
+
+        // Busca veículos cujas secretarias estejam nesse array de IDs
+        $veiculos = Veiculo::with('secretaria')
+            ->whereIn('secretaria_id', $secretariaIds)
+            ->get();
+
         return view('veiculos.index', compact('veiculos'));
     }
 
