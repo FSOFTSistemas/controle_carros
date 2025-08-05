@@ -37,7 +37,8 @@
                     <td>{{ $motorista->cpf }}</td>
                     <td>
                         @if ($motorista->cnh)
-                            <a href="{{ Storage::url($motorista->cnh) }}" target="_blank" class="btn btn-info btn-sm">Ver CNH</a>
+                            <a href="{{ Storage::url($motorista->cnh) }}" target="_blank" class="btn btn-info btn-sm">Ver
+                                CNH</a>
                         @else
                             -
                         @endif
@@ -47,16 +48,20 @@
                         <a href="{{ route('motoristas.documentos', $motorista->id) }}" class="btn btn-info btn-sm">
                             <i class="fas fa-file-alt"></i> Ver Documentos
                         </a>
-                        <a href="{{ route('motoristas.edit', $motorista->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                        @can("gerenciar motoristas")
+                            <a href="{{ route('motoristas.edit', $motorista->id) }}" class="btn btn-warning btn-sm">Editar</a>
 
-                        <!-- Botão de exclusão com SweetAlert2 -->
-                        <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $motorista->id }}">Excluir</button>
+                            <!-- Botão de exclusão com SweetAlert2 -->
+                            <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $motorista->id }}">Excluir</button>
 
-                        <!-- Formulário oculto para exclusão -->
-                        <form id="delete-form-{{ $motorista->id }}" action="{{ route('motoristas.destroy', $motorista->id) }}" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
+                            <!-- Formulário oculto para exclusão -->
+                            <form id="delete-form-{{ $motorista->id }}"
+                                action="{{ route('motoristas.destroy', $motorista->id) }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
@@ -67,14 +72,16 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @stop
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -111,7 +118,7 @@
         });
 
         // Exibir notificação de sucesso
-        @if(session('success'))
+        @if (session('success'))
             Swal.fire({
                 title: 'Sucesso!',
                 text: '{{ session('success') }}',

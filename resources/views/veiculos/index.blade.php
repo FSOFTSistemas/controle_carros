@@ -36,6 +36,7 @@
                     <td>{{ $veiculo->secretaria->nome ?? '-'}}</td>
                     <td>
                         <a href="{{ route('veiculos.show', $veiculo->id) }}" class="btn btn-info btn-sm">Ver</a>
+                        @can("gerenciar veículos")
                         <a href="{{ route('veiculos.edit', $veiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
                         <form action="{{ route('veiculos.destroy', $veiculo->id) }}" method="POST" style="display:inline;">
                             @csrf
@@ -43,6 +44,7 @@
                             <button type="submit" class="btn btn-danger btn-sm btn-delete"
                                 >Excluir</button>
                         </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

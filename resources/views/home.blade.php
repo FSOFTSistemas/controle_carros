@@ -12,7 +12,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>{{$motorista}}</h3>
+                    <h3>{{ $motorista }}</h3>
                     <p>Motoristas</p>
                 </div>
                 <div class="icon">
@@ -25,7 +25,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>{{$veiculo}}</h3>
+                    <h3>{{ $veiculo }}</h3>
                     <p>Veículos</p>
                 </div>
                 <div class="icon">
@@ -38,7 +38,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>{{$monitor}}</h3>
+                    <h3>{{ $monitor }}</h3>
                     <p>Monitores</p>
                 </div>
                 <div class="icon">
@@ -80,15 +80,18 @@
         <h3 class="text-center mb-4">Ações Rápidas</h3>
         <div class="row">
             <!-- Card Veículos -->
-            <div class="col-lg-3 col-md-6 mb-3">
-                <a href="{{ route('veiculos.index') }}" class="card text-dark border-light shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title text-center"><i class="fas fa-car"></i> Veículos</h5>
-                    </div>
-                </a>
-            </div>
+            @can('visualizar veículos')
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <a href="{{ route('veiculos.index') }}" class="card text-dark border-light shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-center"><i class="fas fa-car"></i> Veículos</h5>
+                        </div>
+                    </a>
+                </div>
+            @endcan
 
             <!-- Card Motoristas -->
+            @can('visualizar motoristas')
             <div class="col-lg-3 col-md-6 mb-3">
                 <a href="{{ route('motoristas.index') }}" class="card text-dark border-light shadow-sm h-100">
                     <div class="card-body">
@@ -96,8 +99,10 @@
                     </div>
                 </a>
             </div>
+            @endcan
 
             <!-- Card Monitores -->
+            @can('visualizar monitores')
             <div class="col-lg-3 col-md-6 mb-3">
                 <a href="{{ route('monitores.index') }}" class="card text-dark border-light shadow-sm h-100">
                     <div class="card-body">
@@ -105,8 +110,10 @@
                     </div>
                 </a>
             </div>
+            @endcan
 
             <!-- Card Usuários -->
+            @can('visualizar usuários')
             <div class="col-lg-3 col-md-6 mb-3">
                 <a href="{{ route('users.index') }}" class="card text-dark border-light shadow-sm h-100">
                     <div class="card-body">
@@ -114,6 +121,7 @@
                     </div>
                 </a>
             </div>
+            @endcan
 
             <!-- Card Endereços -->
             <div class="col-lg-3 col-md-6 mb-3">

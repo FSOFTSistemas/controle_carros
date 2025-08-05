@@ -24,6 +24,7 @@
                 <tr>
                     <td>{{ $secretaria->id }}</td>
                     <td>{{ $secretaria->nome }}</td>
+                    @can("gerenciar secretarias")
                     <td>
                         <a href="{{ route('secretarias.edit', $secretaria->id) }}" class="btn btn-sm btn-warning">Editar</a>
                         <form action="{{ route('secretarias.destroy', $secretaria->id) }}" method="POST" style="display:inline-block;">
@@ -32,6 +33,7 @@
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?')">Excluir</button>
                         </form>
                     </td>
+                    @endcan
                 </tr>
             @endforeach
         </tbody>
