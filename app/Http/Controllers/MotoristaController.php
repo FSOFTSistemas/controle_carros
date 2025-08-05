@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Motorista;
 use App\Models\Secretaria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class MotoristaController extends Controller
 {
     public function index()
     {
-        // Carregar motoristas com secretaria para evitar N+1
-        $motoristas = Motorista::with('secretaria')->get();
+        // Carregar motoristas apenas das secretarias do usuário autenticado
+        $secretariaIds = Auth::user()->secretarias()->pluck('id');
+        $motoristas = Motorista::with('secretaria')
+            ->whereIn('secretaria_id', $secretariaIds)
+            ->get();
         return view('motoristas.index', compact('motoristas'));
     }
 
